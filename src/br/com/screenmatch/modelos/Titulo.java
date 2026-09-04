@@ -1,6 +1,11 @@
-package br.com.screnmatch.modelos;
+package br.com.screenmatch.modelos;
 
-public class Titulo {
+import br.com.screenmatch.calculos.Classificavel;
+import br.com.screenmatch.excecao.ErroDeConversaoDeAnoException;
+import com.google.gson.annotations.SerializedName;
+
+public class Titulo implements Comparable<Titulo> {
+
 
     private String nome;
     private int anoDeLancamento;
@@ -9,10 +14,26 @@ public class Titulo {
     private int totalDeAvaliacao;
     private int duracaoEmMinutos;
 
+    public Titulo(String nome, int anoDeLancamento) {
+        this.nome = nome;
+        this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOmdb meuTituloOmdb) {
+        this.nome = meuTituloOmdb.title();
+
+        if(meuTituloOmdb.year().length() >4) {
+            throw new ErroDeConversaoDeAnoException("Não consegui converter o ano pq tem mais de 04 caracteres");
+        }
+        this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.year());
+        this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.runtime().substring(0, 2));
+    }
+
 
     public String getNome() {
         return nome;
     }
+
 
     public int getAnoDeLancamento() {
         return anoDeLancamento;
@@ -58,5 +79,15 @@ public class Titulo {
 
     public double pegaMedia(){
         return somaDasAvaliacoes / totalDeAvaliacao;
+    }
+
+    @Override
+    public int compareTo(Titulo outroTitulo) {
+        return this.getNome().compareTo(outroTitulo.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return "nome=" + nome  + ", anoDeLancamento=" + anoDeLancamento + "," + " duração " + duracaoEmMinutos;
     }
 }

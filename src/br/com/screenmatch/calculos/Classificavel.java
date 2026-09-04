@@ -1,4 +1,12 @@
 package br.com.screenmatch.calculos;
 
-public class Classificavel {
+public interface Classificavel {
+
+
+     int getClassificacao();
+
+
+
+
+
 }

@@ -1,4 +1,4 @@
-package br.com.screnmatch.modelos;
+package br.com.screenmatch.modelos;
 
 public class Serie extends Titulo{
 
@@ -6,6 +6,10 @@ public class Serie extends Titulo{
     private boolean ativa;
     private int episodioPorTemporada;
     private int minutosPporEpisodio;
+
+    public Serie(String nome, int anoDeLancamento) {
+        super(nome, anoDeLancamento);
+    }
 
     public int getTemporadas() {
         return temporadas;
@@ -42,5 +46,10 @@ public class Serie extends Titulo{
     @Override
     public int getDuracaoEmMinutos() {
         return temporadas * episodioPorTemporada * minutosPporEpisodio;
+    }
+
+    @Override
+    public String toString() {
+        return "Serie: " + this.getNome() + " (" + this.getAnoDeLancamento() + ")";
     }
 }
